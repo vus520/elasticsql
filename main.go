@@ -1,6 +1,11 @@
 package elasticsql
 
-import "github.com/xwb1989/sqlparser"
+import (
+	"bytes"
+	"encoding/json"
+	"errors"
+	"github.com/xwb1989/sqlparser"
+)
 
 // Convert will transform sql to elasticsearch dsl string
 func Convert(sql string) (dsl string, table string, err error) {
@@ -26,5 +31,26 @@ func Convert(sql string) (dsl string, table string, err error) {
 		return "", "", err
 	}
 
+	// convertion dsl to json to check if it is right.
+	var prettyJSON bytes.Buffer
+	err = json.Indent(&prettyJSON, []byte(dsl), "", "  ")
+	if err != nil {
+		dsl = ""
+	} else {
+		dsl = string(prettyJSON.Bytes())
+	}
+
 	return dsl, table, nil
+}
+
+func handleUpdate(upd *sqlparser.Update) (string, string, error) {
+	return "", "", errors.New("update not supported")
+}
+
+func handleInsert(ins *sqlparser.Insert) (string, string, error) {
+	return "", "", errors.New("insert not supported")
+}
+
+func handleDelete(del *sqlparser.Delete) (string, string, error) {
+	return "", "", errors.New("delete not supported")
 }
