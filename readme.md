@@ -3,7 +3,7 @@ Overview
 [![Build Status](https://travis-ci.org/cch123/elasticsql.svg?branch=master)](https://travis-ci.org/cch123/elasticsql)
 [![Go Documentation](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/cch123/elasticsql)
 
-This tool converts sql to elasticsearch dsl
+This tool converts sql to elasticsearch dsl (forked from cch123/elasticsql)
 
 Currently support:
 
@@ -32,8 +32,10 @@ Currently support:
 Usage
 -------------
 
-> go get github.com/xwb1989/sqlparser
-> go get github.com/cch123/elasticsql
+```shell
+go get github.com/xwb1989/sqlparser
+go get github.com/cch123/elasticsql
+```
 
 Demo :
 ```go
@@ -41,8 +43,7 @@ package main
 
 import (
     "fmt"
-
-    "github.com/cch123/elasticsql"
+    "github.com/vus520/elasticsql"
 )
 
 var sql = `
