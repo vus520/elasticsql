@@ -4,11 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/xwb1989/sqlparser"
 )
 
 var (
-	Pretty = true
+	Pretty = false
+	Host   = "http://admin:admin@127.0.0.1:9200/"
+	Index  = ""
 )
 
 // Convert will transform sql to elasticsearch dsl string
@@ -47,6 +50,24 @@ func Convert(sql string) (dsl string, table string, err error) {
 	}
 
 	return dsl, table, nil
+}
+
+// 格式化成 curl shell
+func Curlshell(sql string) (dsl string, err error) {
+	Pretty = false
+	dsl, index, err := Convert(sql)
+
+	if err != nil {
+		return "", err
+	}
+
+	if Index != "" {
+		index = Index
+	}
+
+	index = fmt.Sprintf(`{"index":["%s"],"ignore_unavailable":true}`, index)
+	url := fmt.Sprintf(`'%s/_msearch?timeout=0&ignore_unavailable=true'`, Host)
+	return fmt.Sprintf("curl %s -H 'Connection: keep-alive' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Encoding: gzip, deflate' --data-binary $'%s\\n%s\\n' --compressed", url, index, dsl), nil
 }
 
 func handleUpdate(upd *sqlparser.Update) (string, string, error) {
