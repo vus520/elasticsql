@@ -32,6 +32,7 @@ Currently support:
 Usage
 -------------
 
+> go get github.com/xwb1989/sqlparser
 > go get github.com/cch123/elasticsql
 
 Demo :
