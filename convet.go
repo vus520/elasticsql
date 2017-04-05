@@ -7,6 +7,10 @@ import (
 	"github.com/xwb1989/sqlparser"
 )
 
+var (
+	Pretty = true
+)
+
 // Convert will transform sql to elasticsearch dsl string
 func Convert(sql string) (dsl string, table string, err error) {
 	stmt, err := sqlparser.Parse(sql)
@@ -32,12 +36,14 @@ func Convert(sql string) (dsl string, table string, err error) {
 	}
 
 	// convertion dsl to json to check if it is right.
-	var prettyJSON bytes.Buffer
-	err = json.Indent(&prettyJSON, []byte(dsl), "", "  ")
-	if err != nil {
-		dsl = ""
-	} else {
-		dsl = string(prettyJSON.Bytes())
+	if Pretty {
+		var prettyJSON bytes.Buffer
+		err = json.Indent(&prettyJSON, []byte(dsl), "", "  ")
+		if err != nil {
+			dsl = ""
+		} else {
+			dsl = string(prettyJSON.Bytes())
+		}
 	}
 
 	return dsl, table, nil
