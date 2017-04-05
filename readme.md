@@ -132,6 +132,10 @@ Other info
 ------------
 When writing this tool, I tried to avoid the deprecated dsl filters and aggregations, so it is compatable with most versions of the elasticsearch
 
+Thanks
+------------
+https://github.com/cch123/elasticsql
+
 License
 -----------
 MIT
