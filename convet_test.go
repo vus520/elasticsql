@@ -1,7 +1,6 @@
 package elasticsql
 
 import (
-	"github.com/vus520/elasticsql"
 	"testing"
 )
 
@@ -16,8 +15,8 @@ var dsls = []string{
 
 func Test_Convert(t *testing.T) {
 	for k, str := range sqls {
-		elasticsql.Pretty = false
-		a, b, c := elasticsql.Convert(str)
+		Pretty = false
+		a, b, c := Convert(str)
 
 		if c != nil {
 			t.Error("Error catched:" + str + c.Error())
