@@ -112,6 +112,38 @@ will produce :
 aaa
 ```
 
+Demo 2:
+
+```go
+package main
+
+import (
+    "fmt"
+
+    "github.com/vus520/elasticsql"
+)
+
+var sql = `
+select a,b from c
+where d="e"
+limit 100,10
+`
+
+func main() {
+    elasticsql.Host = "http://admin:admin@127.0.0.1:9200/"
+    elasticsql.Index = "logstash-indexName-2017.*"
+
+    shell, _ := elasticsql.Curlshell(sql)
+    fmt.Println(shell)
+}
+```
+
+will produce :
+
+```shell
+curl 'http://admin:admin@127.0.0.1:9200//_msearch?timeout=0&ignore_unavailable=true' -H 'Connection: keep-alive' -H 'Accept: application/json, text/plain, */*' -H 'Accept-Encoding: gzip, deflate' --data-binary $'{"index":["logstash-indexName-2017.*"],"ignore_unavailable":true}\n{"query" : {"bool" : {"must" : [{"match" : {"d" : {"query" : "e", "type" : "phrase"}}}]}},"from" : 100,"size" : 10}\n' --compressed
+```
+
 If your sql contains some keywords, eg. order, timestamp, don't forget to escape these fields as follows:
 
 ```
