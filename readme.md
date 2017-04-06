@@ -33,8 +33,8 @@ Usage
 -------------
 
 ```shell
-go get github.com/xwb1989/sqlparser
-go get github.com/cch123/elasticsql
+go get github.com/vus520/sqlparser
+go get github.com/vus520/elasticsql
 ```
 
 Demo :

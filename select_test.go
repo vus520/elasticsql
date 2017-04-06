@@ -3,7 +3,7 @@ package elasticsql
 import (
 	"testing"
 
-	"github.com/xwb1989/sqlparser"
+	"github.com/vus520/sqlparser"
 )
 
 //currently not support join syntax
